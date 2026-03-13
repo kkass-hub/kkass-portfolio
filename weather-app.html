@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App | Real-Time Weather Forecast</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/923b74a404.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #7cf03d;
+            --dark-bg: #1f242d;
+            --dark-bg-light: #2d3342;
+            --text-light: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(124, 240, 61, 0.3);
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            color: #ddd;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .search-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            padding: 0.8rem 1.5rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-box button:hover {
+            background: #764ba2;
+        }
+
+        .quick-locations {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .location-btn {
+            padding: 0.6rem 1.2rem;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .location-btn:hover {
+            border-color: #667eea;
+            background: #f8f8ff;
+        }
+
+        .weather-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .weather-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .weather-card.current {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .location-name {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .temperature {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .weather-condition {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .weather-icon {
+            font-size: 5rem;
+            margin: 1rem 0;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .forecast-section {
+            margin-top: 2rem;
+        }
+
+        .forecast-title {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .forecast-day {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .day-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-temp {
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .day-high {
+            color: #ff6b6b;
+        }
+
+        .day-low {
+            color: #4ecdc4;
+        }
+
+        .day-icon {
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .day-condition {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .alerts {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin-top: 2rem;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .alerts.active {
+            display: block;
+        }
+
+        .alerts strong {
+            color: #856404;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="portfolio.html" class="back-link">← Back to Projects</a>
+        
+        <header>
+            <h1>🌤️ Weather App</h1>
+            <p>Real-Time Weather Information & Forecasts</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="locationInput" placeholder="Search for a city...">
+                <button onclick="searchWeather()">Search</button>
+            </div>
+            <label style="display: block; margin-bottom: 0.5rem; color: #666;">Quick Locations:</label>
+            <div class="quick-locations">
+                <button class="location-btn" onclick="loadWeather('New York')">New York</button>
+                <button class="location-btn" onclick="loadWeather('London')">London</button>
+                <button class="location-btn" onclick="loadWeather('Tokyo')">Tokyo</button>
+                <button class="location-btn" onclick="loadWeather('Sydney')">Sydney</button>
+                <button class="location-btn" onclick="loadWeather('Dubai')">Dubai</button>
+            </div>
+        </div>
+
+        <div class="weather-cards">
+            <div class="weather-card current">
+                <div class="location-name" id="locationName">New York, USA</div>
+                <div class="weather-condition" id="condition">Partly Cloudy</div>
+                <div class="weather-icon" id="icon">⛅</div>
+                <div class="temperature" id="temp">72°F</div>
+                
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Feels Like</div>
+                        <div class="detail-value" id="feelsLike">70°F</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Humidity</div>
+                        <div class="detail-value" id="humidity">65%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Wind Speed</div>
+                        <div class="detail-value" id="windSpeed">12 mph</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">UV Index</div>
+                        <div class="detail-value" id="uvIndex">6</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Pressure</div>
+                        <div class="detail-value" id="pressure">1013 mb</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Visibility</div>
+                        <div class="detail-value" id="visibility">10 km</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="forecast-section">
+            <h2 class="forecast-title">7-Day Forecast</h2>
+            <div class="forecast-grid">
+                <div class="forecast-day">
+                    <div class="day-name">Tomorrow</div>
+                    <div class="day-icon">☀️</div>
+                    <div class="day-condition">Sunny</div>
+                    <div class="day-temp"><span class="day-high">75°F</span> / <span class="day-low">62°F</span></div>
+                </div>
+                <div class="forecast-day">
+                    <div class="day-name">Wednesday</div>
+                    <div class="day-icon">⛅</div>
+                    <div class="day-condition">Partly Cloudy</div>
+                    <div class="day-temp"><span class="day-high">73°F</span> / <span class="day-low">61°F</span></div>
+                </div>
+                <div class="forecast-day">
+                    <div class="day-name">Thursday</div>
+                    <div class="day-icon">🌧️</div>
+                    <div class="day-condition">Rainy</div>
+                    <div class="day-temp"><span class="day-high">68°F</span> / <span class="day-low">58°F</span></div>
+                </div>
+                <div class="forecast-day">
+                    <div class="day-name">Friday</div>
+                    <div class="day-icon">☁️</div>
+                    <div class="day-condition">Cloudy</div>
+                    <div class="day-temp"><span class="day-high">70°F</span> / <span class="day-low">59°F</span></div>
+                </div>
+                <div class="forecast-day">
+                    <div class="day-name">Saturday</div>
+                    <div class="day-icon">☀️</div>
+                    <div class="day-condition">Sunny</div>
+                    <div class="day-temp"><span class="day-high">76°F</span> / <span class="day-low">63°F</span></div>
+                </div>
+                <div class="forecast-day">
+                    <div class="day-name">Sunday</div>
+                    <div class="day-icon">⛅</div>
+                    <div class="day-condition">Partly Cloudy</div>
+                    <div class="day-temp"><span class="day-high">74°F</span> / <span class="day-low">62°F</span></div>
+                </div>
+                <div class="forecast-day">
+                    <div class="day-name">Monday</div>
+                    <div class="day-icon">⛈️</div>
+                    <div class="day-condition">Thunderstorms</div>
+                    <div class="day-temp"><span class="day-high">69°F</span> / <span class="day-low">57°F</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alerts">
+            <strong>⚠️ Weather Alert:</strong> Strong winds expected tomorrow morning. Please secure loose outdoor items.
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Weather App | Developed by Kkass Tech Developers</p>
+        </footer>
+    </div>
+
+    <script>
+        function searchWeather() {
+            const location = document.getElementById('locationInput').value;
+            if (location) {
+                loadWeather(location);
+            }
+        }
+
+        function loadWeather(location) {
+            // Simulate loading weather for different locations
+            const weatherData = {
+                'New York': { temp: '72°F', condition: 'Partly Cloudy', icon: '⛅', feels: '70°F', humidity: '65%', wind: '12 mph' },
+                'London': { temp: '59°F', condition: 'Rainy', icon: '🌧️', feels: '56°F', humidity: '80%', wind: '18 mph' },
+                'Tokyo': { temp: '68°F', condition: 'Clear', icon: '☀️', feels: '67°F', humidity: '55%', wind: '8 mph' },
+                'Sydney': { temp: '79°F', condition: 'Sunny', icon: '☀️', feels: '78°F', humidity: '45%', wind: '10 mph' },
+                'Dubai': { temp: '95°F', condition: 'Sunny', icon: '☀️', feels: '102°F', humidity: '30%', wind: '15 mph' }
+            };
+
+            const data = weatherData[location] || weatherData['New York'];
+            document.getElementById('locationName').textContent = location + ', Country';
+            document.getElementById('condition').textContent = data.condition;
+            document.getElementById('icon').textContent = data.icon;
+            document.getElementById('temp').textContent = data.temp;
+            document.getElementById('feelsLike').textContent = data.feels;
+            document.getElementById('humidity').textContent = data.humidity;
+            document.getElementById('windSpeed').textContent = data.wind;
+            document.getElementById('locationInput').value = '';
+        }
+
+        // Load default weather on page load
+        loadWeather('New York');
+    </script>
+</body>
+</html>

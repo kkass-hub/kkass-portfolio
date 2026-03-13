@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialHub | Social Network Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/923b74a404.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --dark-bg: #1f242d;
+            --dark-bg-light: #2d3342;
+            --primary-color: #7cf03d;
+            --text-light: #fff;
+            --text-muted: #ddd;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Roboto', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-muted);
+        }
+
+        /* Header */
+        header {
+            background: var(--dark-bg-light);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            sticky: top;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .header-icons a {
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .header-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--dark-bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            height: fit-content;
+            border: 1px solid rgba(124, 240, 61, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar ul a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main Feed */
+        .feed {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .post-composer {
+            background: var(--dark-bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(124, 240, 61, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .composer-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-bg);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .composer-input {
+            flex: 1;
+            padding: 1rem;
+            background: var(--dark-bg);
+            border: 1px solid rgba(124, 240, 61, 0.2);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .composer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .composer-input::placeholder {
+            color: #999;
+        }
+
+        .composer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(124, 240, 61, 0.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .action-btn {
+            color: var(--primary-color);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+
+        .post-btn {
+            padding: 0.6rem 1.5rem;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .post-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Posts */
+        .post {
+            background: var(--dark-bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(124, 240, 61, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .post-header {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(124, 240, 61, 0.1);
+        }
+
+        .post-author {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .author-info h4 {
+            color: var(--text-light);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info .time {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .post-options {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .post-options:hover {
+            color: var(--primary-color);
+        }
+
+        .post-content {
+            padding: 0 1.5rem 1.5rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 300px;
+            background: var(--dark-bg);
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-stats {
+            padding: 0.8rem 1.5rem;
+            background: rgba(124, 240, 61, 0.05);
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(124, 240, 61, 0.1);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .post-actions {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(124, 240, 61, 0.1);
+        }
+
+        .post-action {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            flex: 1;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .post-action:hover {
+            color: var(--primary-color);
+        }
+
+        /* Rightbar */
+        .rightbar {
+            background: var(--dark-bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            height: fit-content;
+            border: 1px solid rgba(124, 240, 61, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .rightbar h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .suggestion-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .suggestion-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-bg);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+            color: var(--text-light);
+        }
+
+        .suggestion-info p {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .follow-btn {
+            padding: 0.4rem 0.8rem;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .follow-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            margin-top: 2rem;
+            border-top: 2px solid var(--dark-bg-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar,
+            .rightbar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">👥 SocialHub</a>
+            <div class="header-icons">
+                <a href="#">🔍</a>
+                <a href="#">💬
+                    <span class="notification-badge">3</span>
+                </a>
+                <a href="#">🔔
+                    <span class="notification-badge">5</span>
+                </a>
+                <a href="portfolio.html" class="back-link">← Projects</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <ul>
+                <li><a href="#">🏠 Home</a></li>
+                <li><a href="#">👥 Friends</a></li>
+                <li><a href="#">📸 Photos</a></li>
+                <li><a href="#">🎬 Videos</a></li>
+                <li><a href="#">📝 Groups</a></li>
+                <li><a href="#">⭐ Saved</a></li>
+                <li><a href="#">⚙️ Settings</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Feed -->
+        <div class="feed">
+            <!-- Post Composer -->
+            <div class="post-composer">
+                <div class="composer-header">
+                    <div class="user-avatar">👤</div>
+                    <input type="text" class="composer-input" placeholder="What's on your mind?">
+                </div>
+                <div class="composer-actions">
+                    <div class="action-buttons">
+                        <button class="action-btn" title="Add Photo">📸</button>
+                        <button class="action-btn" title="Add Emoji">😊</button>
+                        <button class="action-btn" title="Add Location">📍</button>
+                    </div>
+                    <button class="post-btn">Post</button>
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="user-avatar">👨</div>
+                        <div class="author-info">
+                            <h4>John Developer</h4>
+                            <div class="time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <button class="post-options">⋯</button>
+                </div>
+                <div class="post-content">
+                    Just launched my new web development portfolio! Really proud of how it turned out. Check it out and let me know what you think! 🚀
+                </div>
+                <div class="post-image">💻</div>
+                <div class="post-stats">
+                    <span>👍 487 Likes</span>
+                    <span>💬 24 Comments</span>
+                    <span>↗️ 52 Shares</span>
+                </div>
+                <div class="post-actions">
+                    <button class="post-action">👍 Like</button>
+                    <button class="post-action">💬 Comment</button>
+                    <button class="post-action">↗️ Share</button>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="user-avatar">👩</div>
+                        <div class="author-info">
+                            <h4>Sarah Designer</h4>
+                            <div class="time">4 hours ago</div>
+                        </div>
+                    </div>
+                    <button class="post-options">⋯</button>
+                </div>
+                <div class="post-content">
+                    Started learning React today! Excited to explore this amazing library. Anyone have good resources to recommend? 🎓
+                </div>
+                <div class="post-stats">
+                    <span>👍 234 Likes</span>
+                    <span>💬 18 Comments</span>
+                    <span>↗️ 12 Shares</span>
+                </div>
+                <div class="post-actions">
+                    <button class="post-action">👍 Like</button>
+                    <button class="post-action">💬 Comment</button>
+                    <button class="post-action">↗️ Share</button>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="user-avatar">👨‍💼</div>
+                        <div class="author-info">
+                            <h4>Tech News Daily</h4>
+                            <div class="time">6 hours ago</div>
+                        </div>
+                    </div>
+                    <button class="post-options">⋯</button>
+                </div>
+                <div class="post-content">
+                    Breaking: New JavaScript framework gains 10K stars on GitHub in first week! 🌟 Developers are loving the new features and performance improvements.
+                </div>
+                <div class="post-image">⭐</div>
+                <div class="post-stats">
+                    <span>👍 1.2K Likes</span>
+                    <span>💬 156 Comments</span>
+                    <span>↗️ 234 Shares</span>
+                </div>
+                <div class="post-actions">
+                    <button class="post-action">👍 Like</button>
+                    <button class="post-action">💬 Comment</button>
+                    <button class="post-action">↗️ Share</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="rightbar">
+            <h3>Suggested For You</h3>
+            
+            <div class="suggestion-item">
+                <div class="suggestion-avatar">🧑</div>
+                <div class="suggestion-info">
+                    <h4>Alex Johnson</h4>
+                    <p>210 mutual friends</p>
+                </div>
+                <button class="follow-btn">+ Add</button>
+            </div>
+
+            <div class="suggestion-item">
+                <div class="suggestion-avatar">👱</div>
+                <div class="suggestion-info">
+                    <h4>Emma Tech</h4>
+                    <p>156 mutual friends</p>
+                </div>
+                <button class="follow-btn">+ Add</button>
+            </div>
+
+            <div class="suggestion-item">
+                <div class="suggestion-avatar">👨‍🦱</div>
+                <div class="suggestion-info">
+                    <h4>Mike Coder</h4>
+                    <p>89 mutual friends</p>
+                </div>
+                <button class="follow-btn">+ Add</button>
+            </div>
+
+            <div class="suggestion-item">
+                <div class="suggestion-avatar">👩‍🦰</div>
+                <div class="suggestion-info">
+                    <h4>Lisa UI/UX</h4>
+                    <p>245 mutual friends</p>
+                </div>
+                <button class="follow-btn">+ Add</button>
+            </div>
+
+            <div class="suggestion-item">
+                <div class="suggestion-avatar">👨‍💻</div>
+                <div class="suggestion-info">
+                    <h4>Dev Community</h4>
+                    <p>1.2K followers</p>
+                </div>
+                <button class="follow-btn">+ Join</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SocialHub | Developed by Kkass Tech Developers</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Kkass Tech Developers</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/923b74a404.js" crossorigin="anonymous"></script> 
+</head>
+<body>
+    
+    <nav class="navbar">
+        <a href="index.html" class="logo">Portfolio.</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html">Project</a></li>
+            <li class="active"><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="bars-animation">
+        <div class="bar" style="--i:6;"></div>
+        <div class="bar" style="--i:5;"></div>
+        <div class="bar" style="--i:4;"></div>
+        <div class="bar" style="--i:3;"></div>
+        <div class="bar" style="--i:2;"></div>
+        <div class="bar" style="--i:1;"></div>
+    </div>
+    <section class="contact">
+        <div class="contact-container">
+            <h1>Get In Touch</h1>
+            <p class="intro">Have a project in mind or want to collaborate? I'd love to hear from you. Fill out the form below and I'll get back to you as soon as possible.</p>
+            
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2>Contact Details</h2>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Email</h3>
+                            <p><a href="mailto:kkasstechdevelopers.com@gmail.com">kkasstechdevelopers.com@gmail.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Phone</h3>
+                            <p><a href="tel:+254785121254"> (+254) 785-121-254</a></p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-map-pin"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Location</h3>
+                            <p>Nairobi, Kenya</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Response Time</h3>
+                            <p>I typically respond within 24 hours</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <h3>Follow Me</h3>
+                        <div class="sci">
+                            <a href="https://github.com/kkass-hub"><i class="fa-brands fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/kkass-simo"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="https://twitter.com/kkass_simo"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="https://www.youtube.com/@kkass_tech"><i class="fa-brands fa-youtube"></i></a>
+                            <a href="https://www.facebook.com/kkass.simo.2025"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="https://www.tiktok.com/@kkasstechdeveloper?is_from_webapp=1&sender_device=pc"><i class="fa-brands fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h2>Send Me a Message</h2>
+                    <form id="contactForm" method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required placeholder="Project Inquiry">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Tell me about your project..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                    <div id="formMessage" class="form-message"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const formMessage = document.getElementById('formMessage');
+            formMessage.textContent = 'Sending your message...';
+            formMessage.className = 'form-message sending';
+        });
+    </script>
+    <footer class="footer">
+        <p>&copy; All rights reserved by Kkass Tech Developers</p>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <script src="whatsapp.js"></script>
+
+    <!-- Navigation Bar Scroll Behavior -->
+    <script src="navigation.js"></script>
+</body>
+</html>

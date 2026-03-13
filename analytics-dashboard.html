@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | Business Metrics</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/923b74a404.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --dark-bg: #1f242d;
+            --dark-bg-light: #2d3342;
+            --primary-color: #7cf03d;
+            --text-light: #fff;
+            --text-muted: #ddd;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Roboto', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-muted);
+        }
+
+        /* Header */
+        header {
+            background: var(--dark-bg-light);
+            color: var(--text-light);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--dark-bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(124, 240, 61, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.6rem;
+            border: 1px solid rgba(124, 240, 61, 0.2);
+            background: var(--dark-bg);
+            color: var(--text-muted);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .filter-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* KPI Cards */
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--dark-bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .kpi-card.kpi-success {
+            border-left-color: #28a745;
+        }
+
+        .kpi-card.kpi-warning {
+            border-left-color: #ffc107;
+        }
+
+        .kpi-card.kpi-danger {
+            border-left-color: #dc3545;
+        }
+
+        .kpi-label {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-change {
+            font-size: 0.85rem;
+            color: #28a745;
+        }
+
+        .kpi-change.down {
+            color: #dc3545;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--dark-bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(124, 240, 61, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: var(--dark-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 3rem;
+        }
+
+        /* Bar Chart Simulation */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .bar {
+            flex: 1;
+            background: var(--primary-color);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            min-height: 20px;
+        }
+
+        .bar-label {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        /* Table Section */
+        .table-section {
+            background: var(--dark-bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(124, 240, 61, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--dark-bg);
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        td {
+            padding: 1rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(124, 240, 61, 0.1);
+        }
+
+        tr:hover {
+            background: rgba(124, 240, 61, 0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 2px solid var(--dark-bg-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-section {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-section {
+                flex-direction: column;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">📊 Analytics Dashboard</div>
+        <div class="user-info">
+            <a href="portfolio.html" class="back-link">← Back to Projects</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Business Analytics & Metrics</h1>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <label>Date Range:</label>
+                <input type="date">
+                <span>to</span>
+                <input type="date">
+            </div>
+            <div class="filter-group">
+                <label>Department:</label>
+                <select>
+                    <option>All Departments</option>
+                    <option>Sales</option>
+                    <option>Marketing</option>
+                    <option>Engineering</option>
+                </select>
+            </div>
+            <button class="filter-btn">Apply Filters</button>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-section">
+            <div class="kpi-card">
+                <div class="kpi-label">Total Revenue</div>
+                <div class="kpi-value">$2.4M</div>
+                <div class="kpi-change">↑ 12.5% from last month</div>
+            </div>
+
+            <div class="kpi-card kpi-success">
+                <div class="kpi-label">Total Orders</div>
+                <div class="kpi-value">8,234</div>
+                <div class="kpi-change">↑ 8.2% from last month</div>
+            </div>
+
+            <div class="kpi-card kpi-warning">
+                <div class="kpi-label">Average Order Value</div>
+                <div class="kpi-value">$291.42</div>
+                <div class="kpi-change down">↓ 2.1% from last month</div>
+            </div>
+
+            <div class="kpi-card kpi-danger">
+                <div class="kpi-label">Customer Churn Rate</div>
+                <div class="kpi-value">3.2%</div>
+                <div class="kpi-change down">↑ 0.8% from last month</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-title">Revenue Trend (Last 6 Months)</div>
+                <div class="bar-chart">
+                    <div style="height: 160px;" class="bar"></div>
+                    <div style="height: 180px;" class="bar"></div>
+                    <div style="height: 200px;" class="bar"></div>
+                    <div style="height: 220px;" class="bar"></div>
+                    <div style="height: 240px;" class="bar"></div>
+                    <div style="height: 280px;" class="bar"></div>
+                </div>
+                <div style="display: flex; justify-content: space-around;">
+                    <div class="bar-label">Jan</div>
+                    <div class="bar-label">Feb</div>
+                    <div class="bar-label">Mar</div>
+                    <div class="bar-label">Apr</div>
+                    <div class="bar-label">May</div>
+                    <div class="bar-label">Jun</div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-title">Traffic Sources</div>
+                <div class="chart-placeholder">📈</div>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-section">
+            <h2 class="table-title">Top Performing Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Units Sold</th>
+                        <th>Revenue</th>
+                        <th>Growth Rate</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Premium Wireless Headphones</td>
+                        <td>Electronics</td>
+                        <td>1,243</td>
+                        <td>$148,140</td>
+                        <td>+24.5%</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>Smart Watch Series X</td>
+                        <td>Wearables</td>
+                        <td>892</td>
+                        <td>$115,960</td>
+                        <td>+18.2%</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>Laptop Stand Pro</td>
+                        <td>Accessories</td>
+                        <td>2,156</td>
+                        <td>$75,460</td>
+                        <td>+12.8%</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>USB-C Hub Mega</td>
+                        <td>Accessories</td>
+                        <td>1,654</td>
+                        <td>$82,700</td>
+                        <td>+8.5%</td>
+                        <td><span class="status-badge status-pending">Pending Review</span></td>
+                    </tr>
+                    <tr>
+                        <td>Studio Professional Headphone</td>
+                        <td>Electronics</td>
+                        <td>432</td>
+                        <td>$86,368</td>
+                        <td>-3.2%</td>
+                        <td><span class="status-badge status-inactive">Inactive</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mechanical Gaming Keyboard</td>
+                        <td>Gaming</td>
+                        <td>1,789</td>
+                        <td>$142,321</td>
+                        <td>+15.6%</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Analytics Dashboard | Developed by Kkass Tech Developers</p>
+    </footer>
+</body>
+</html>
